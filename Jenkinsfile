@@ -19,7 +19,13 @@ pipeline{
             sh label: '', script: 'mvn package' 	 
           }
 		 }
-      stage('PUSH Docker image'){
+      stage('Build Docker image'){
+	      steps {
+		    sh label: '', script: 'docker build -t $(imageid) .'
+		  }
+		 }
+	  
+	  stage('PUSH Docker image'){
           steps {
 		   withCredentials([string(credentialsId: 'docker-pwd', variable: 'DockerHubloginpwd')]) {
            sh label: '', script: "docker login -u santhoshadari -p ${DockerHubloginpwd}" }
