@@ -21,7 +21,7 @@ pipeline{
 		 }
       stage('Build Docker image'){
 	      steps {
-		    sh label: '', script: "image = docker build -t ${imagetag} ."
+		    sh label: '', script: "docker build -t ${imagetag} ."
 			 println "Newly generated image," + image.id
 		  }
 		 }	  
