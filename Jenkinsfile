@@ -32,6 +32,5 @@ pipeline{
            sh label: '', script: "docker push ${imagetag}"
 		   }
 		 }
-      stage('')
 	}
 }
