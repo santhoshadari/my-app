@@ -2,6 +2,7 @@ pipeline{
     agent any
 	environment {
 	       imagetag = "santhoshadari/my-app:2.1.0"
+		   def image
 	}
 	stages{
 	  stage('SCM checkout'){
@@ -21,7 +22,7 @@ pipeline{
 		 }
       stage('Build Docker image'){
 	      steps {
-		    sh label: '', script: image = "docker build -t ${imagetag} ."
+		    sh label: '', script: image = ${"docker build -t ${imagetag} .}"
 			println "Newly generated image," + image.id
 		  }
 		 }	  
