@@ -21,16 +21,17 @@ pipeline{
 		 }
       stage('Build Docker image'){
 	      steps {
-		    sh label: '', script: "docker build -t ${imagetag} ."
+		    sh label: '', script: image = "docker build -t ${imagetag} ."
+			println "Newly generated image," + image.id
 		  }
-		 }
-	  
+		 }	  
 	  stage('PUSH Docker image'){
           steps {
 		   withCredentials([string(credentialsId: 'docker-pwd', variable: 'DockerHubloginpwd')]) {
            sh label: '', script: "docker login -u santhoshadari -p ${DockerHubloginpwd}" }
            sh label: '', script: "docker push ${imagetag}"
 		   }
-		 }	  
-	}	
+		 }
+      stage('')
+	}
 }
