@@ -21,7 +21,7 @@ pipeline{
 		 }
       stage('Build Docker image'){
 	      steps {
-		    sh label: '', script: 'docker build -t $(imageid) .'
+		    sh label: '', script: "docker build -t ${imagetag} ."
 		  }
 		 }
 	  
