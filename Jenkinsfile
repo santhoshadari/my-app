@@ -25,6 +25,6 @@ pipeline{
         withCredentials([string(credentialsId: 'docker-pwd', variable: 'DockerHubloginpwd')]) {
         sh label: '', script: "docker login -u santhoshadari -p ${DockerHubloginpwd}"
          }
-		 sh label: '', script: "docker push $(imagetag)"
+		 sh label: '', script: "docker push \$(imagetag)"
 	}
 }
