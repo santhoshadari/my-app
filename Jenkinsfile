@@ -22,7 +22,6 @@ pipeline{
       stage('Build Docker image'){
 	      steps {
 		    sh label: '', script: "docker build -t ${imagetag} ."
-			 println "Newly generated image," + image.id
 		  }
 		 }	  
 	  stage('PUSH Docker image'){
@@ -30,6 +29,27 @@ pipeline{
 		   withCredentials([string(credentialsId: 'docker-pwd', variable: 'DockerHubloginpwd')]) {
            sh label: '', script: "docker login -u santhoshadari -p ${DockerHubloginpwd}" }
            sh label: '', script: "docker push ${imagetag}"
+		   }
+		 }
+	  stage('stop&remove container'){
+	      steps {
+		    sh """
+			   docker ps -a \
+			   | awk '{ print \$1,\$2 }' \
+			   | grep \${imagetag} 
+			   | awk '{ print \$1 }' \
+			   | xargs -I {} docker rm {}
+			"""   
+		   }
+		 }
+	  stage('remove <none> images'){
+	      steps {
+		   docker images | grep "<none>" | awk '{print $3}' | xargs docker rmi
+		   }
+		 }
+	   stage('Deploye docker image'){
+	      steps {
+		    sh label: '', script: 'docker run -p 9090:8080 --name myapp2 -d $(imagetag)'
 		   }
 		 }
 	}
