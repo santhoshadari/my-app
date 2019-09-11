@@ -43,7 +43,7 @@ pipeline{
 		 }
 	   stage('Deploye docker image'){
 	      steps {
-		    sh label: '', script: 'docker run -p 9090:8080 --name myapp2 -d $(imagetag)'
+		    sh label: '', script: 'docker run -p 9090:8080 --name myapp2 -d ${imagetag}'
 		   }
 		 }
 	}
