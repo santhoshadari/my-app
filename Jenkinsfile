@@ -44,7 +44,7 @@ pipeline{
 		 }	  
 	  stage('remove <none> images'){
 	      steps {
-		    sh label: '', script: 'docker images | grep "<none>" | awk \'{ print $3 }\' | xargs docker rmi'
+		    sh label: '', script: 'docker images | grep "<none>" | awk \'{ print $3 }\' | xargs docker rmi -f'
 		    }
 		 }
 	   stage('Deploye docker image'){
