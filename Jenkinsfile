@@ -36,6 +36,12 @@ pipeline{
 		    sh label: '', script: 'docker ps -a | awk \'{ print $1,$2 }\' | grep ${imagetag} | awk \'{print $1 }\' | xargs -I {} docker rm {}'
 		   }
 		 }
+	  stage('wait_for stop container'){
+           steps {
+		    sh label: '', script: 'echo \'Waiting 2 minutes for deployment to complete prior starting smoke testing\''
+		    sh label: '', script: 'sleep 120'
+		   }
+		 }	  
 	  stage('remove <none> images'){
 	      steps {
 		    sh label: '', script: 'docker images | grep "<none>" | awk \'{ print $3 }\' | xargs docker rmi'
