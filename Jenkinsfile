@@ -33,13 +33,13 @@ pipeline{
 		 }
 	  stage('stop&remove container'){
 	      steps {
-		    sh label: '', script: 'docker ps -a | awk \'{ print $1,$2 }\' | grep ${imagetag} | awk \'{print $1 }\' | xargs -I {} docker rm {}'
+		    sh label: '', script: "docker ps -a | awk \'{ print $1,$2 }\' | grep ${imagetag} | awk \'{ print $1 }\' | xargs -I {} docker rm -f {}"
 		   }
 		 }
 	  stage('wait_for stop container'){
            steps {
-		    sh label: '', script: 'echo \'Waiting 2 minutes for deployment to complete prior starting smoke testing\''
-		    sh label: '', script: 'sleep 120'
+		    sh label: '', script: 'echo \'Waiting 1 minutes for deployment to complete prior starting smoke testing\''
+		    sh label: '', script: 'sleep 60'
 		   }
 		 }	  
 	  stage('remove <none> images'){
