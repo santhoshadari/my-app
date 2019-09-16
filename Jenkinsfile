@@ -31,7 +31,13 @@ pipeline{
 			 //sh label: '', script: 'docker ps -a | awk \'{ print \\$1,\\$2 }\' | grep ${imagetag} | awk \'{ print \\$1 }\' | xargs -I {} docker rm -f {}'
 			//sh label: '', script: "docker ps -a | awk \"{ print $1,$2 }\" | grep ${imagetag} | awk \"{ print $1 }\" | xargs -I {} docker rm -f {}"
 		   }
-		 } 	 
+		 }
+      stage('wait_for stop container'){
+           steps {
+		    sh label: '', script: 'echo \'Waiting 1 minutes for deployment to complete prior starting smoke testing\''
+		    sh label: '', script: 'sleep 20'
+		   }
+		 }		 
       stage('Build Docker image'){
 	      steps {
 		    sh label: '', script: "docker build -t ${imagetag} ."
@@ -42,12 +48,6 @@ pipeline{
 		   withCredentials([string(credentialsId: 'docker-pwd', variable: 'DockerHubloginpwd')]) {
            sh label: '', script: "docker login -u santhoshadari -p ${DockerHubloginpwd}" }
            sh label: '', script: "docker push ${imagetag}"
-		   }
-		 }
-	  stage('wait_for stop container'){
-           steps {
-		    sh label: '', script: 'echo \'Waiting 1 minutes for deployment to complete prior starting smoke testing\''
-		    sh label: '', script: 'sleep 20'
 		   }
 		 }	  
 	  stage('remove <none> images'){
