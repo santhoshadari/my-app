@@ -33,7 +33,7 @@ pipeline{
 		 }
 	  stage('stop&remove container'){
 	      steps {
-			  sh label: '', script: 'docker ps -a | awk \'{ print \\$1,\\$2 }\' | grep ${imagetag} | awk \'{ print \\$1 }\' | xargs -I {} docker rm -f {}'
+			  sh label: '', script: "docker ps -a | awk \'{ print \\$1,\\$2 }\' | grep ${imagetag} | awk \'{ print \\$1 }\' | xargs -I {} docker rm -f {}"
 			//sh label: '', script: "docker ps -a | awk \"{ print $1,$2 }\" | grep ${imagetag} | awk \"{ print $1 }\" | xargs -I {} docker rm -f {}"
 		   }
 		 }
@@ -50,7 +50,7 @@ pipeline{
 		 }
 	   stage('Deploye docker image'){
 	      steps {
-		    sh label: '', script: 'docker run -p 9090:8080 --name myapp2 -d ${imagetag}'
+		    sh label: '', script: "docker run -p 9090:8080 --name myapp2 -d ${imagetag}"
 		   }
 		 }
 	}
