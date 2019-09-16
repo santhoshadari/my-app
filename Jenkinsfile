@@ -33,7 +33,7 @@ pipeline{
 		 }
 	  stage('stop&remove container'){
 	      steps {
-			  sh label: '', script:'docker ps -a | awk '{ print \$1,\$2 }' | grep ${imagetag} | awk '{ print \$1 }' | xargs -I {} docker rm -f {}'
+			  sh label: '', script: 'docker ps -a | awk \'{ print \\$1,\\$2 }\' | grep ${imagetag} | awk \'{ print \\$1 }\' | xargs -I {} docker rm -f {}'
 			//sh label: '', script: "docker ps -a | awk \"{ print $1,$2 }\" | grep ${imagetag} | awk \"{ print $1 }\" | xargs -I {} docker rm -f {}"
 		   }
 		 }
