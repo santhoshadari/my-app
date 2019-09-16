@@ -33,7 +33,7 @@ pipeline{
 		 }
 	  stage('stop&remove container'){
 	      steps {
-			  sh label: '', script: "docker ps -a | awk \'{ print \\$1,\\$2 }\' | grep ${imagetag} | awk \'{ print \\$1 }\' | xargs -I {} docker rm -f {}"
+			  sh label: '', script: 'docker ps -a | awk \'{ print \\$1,\\$2 }\' | grep ${imagetag} | awk \'{ print \\$1 }\' | xargs -I {} docker rm -f {}'
 			//sh label: '', script: "docker ps -a | awk \"{ print $1,$2 }\" | grep ${imagetag} | awk \"{ print $1 }\" | xargs -I {} docker rm -f {}"
 		   }
 		 }
@@ -45,7 +45,7 @@ pipeline{
 		 }	  
 	  stage('remove <none> images'){
 	      steps {
-		    sh label: '', script: 'docker images | grep "<none>" | awk \'{ print $3 }\' | xargs docker rmi -f'
+		    sh label: '', script: 'docker images | grep "<none>" | awk \'{ print \$3 }\' | xargs docker rmi -f'
 		    }
 		 }
 	   stage('Deploye docker image'){
