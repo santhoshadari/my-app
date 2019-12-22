@@ -7,13 +7,14 @@ pipeline{
 	  stage('SCM checkout'){
 	    steps {
                git 'https://github.com/santhoshadari/my-app.git'
-           }            
+               }            
 		 }
 	  stage('MVN Clean-validate-compile'){
 	     steps {
              //sh label: '', script: 'mvn clean validate compile test'
-               bat label: '', script: 'MVN clean validate compile test'	 
-          }
+               bat label: '', script: 'mvn clean validate compile test'	 
+             }
+         }
           stage('MVN package'){
 	     steps {
               //sh label: '', script: 'mvn clean validate compile test'
