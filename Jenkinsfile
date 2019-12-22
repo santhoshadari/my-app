@@ -1,4 +1,4 @@
-pipeline{
+node{
     agent any
 	environment {
 	       imagetag = "santhoshadari/my-app:2.1.0"
